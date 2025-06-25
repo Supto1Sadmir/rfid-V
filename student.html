@@ -20,9 +20,11 @@
   <script>
     // Fetch the student's data from Google Sheets using Google Apps Script API
     async function getStudentData() {
-      const username = "Supto-Sadmir"; // Fetch from login session
-      const response = await fetch(https://script.google.com/macros/s/AKfycbyImHGn0ArhhMtUKCIDl9i8lh502AOhTBLzyG04LZ6e8fDSFXrBdFsCEwH6En_7lHFvuA/exec?name=${username});
+      const username = "Supto-Sadmir"; // This should be fetched from login session
+      const response = await fetch(https://script.google.com/macros/s/AKfycbyJXBU0ehK0LL6s361mtqXFHmasFOT6ls6XgTUEBiAeOncJ0Z9axYMfcftvHVfAEuxoXg/exec?name=${username});
       const data = await response.json();
+      
+      // Display student's name and entry count
       document.getElementById("student-info").innerHTML = `
         <p>Name: ${data.name}</p>
         <p>Entries: ${data.entries}</p>
