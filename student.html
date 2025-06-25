@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student View</title>
+  <title>Student Login</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       margin-top: 50px;
     }
-    input[type="text"] {
+    input[type="text"], input[type="password"] {
       padding: 10px;
       margin: 10px;
       width: 80%;
@@ -22,36 +22,74 @@
   </style>
 </head>
 <body>
-  <h1>Welcome, Student</h1>
-  
-  <label for="username">Enter your name:</label>
-  <input type="text" id="username" placeholder="Enter your name" />
+  <h1>Student Login</h1>
 
-  <button onclick="getStudentData()">Check Entries</button>
+  <!-- Login Form -->
+  <div id="login-form">
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter your username">
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter your password">
+    
+    <button onclick="login()">Login</button>
+    <p id="login-message"></p>
+  </div>
 
-  <div id="student-info"></div>
+  <!-- Student Info Section (Only visible after login) -->
+  <div id="student-info" style="display:none;">
+    <h2>Welcome, <span id="student-name"></span></h2>
+    <div id="student-entries"></div>
+  </div>
 
   <script>
-    async function getStudentData() {
-      const username = document.getElementById("username").value.trim();
-      
-      if (!username) {
-        document.getElementById("student-info").innerHTML = <p>Please enter a name.</p>;
-        return;
-      }
+    // Predefined student credentials (username and password)
+    const studentCredentials = {
+      "Supto-Sadmir": "student123",
+      "Rudro-Karmokar": "student456"
+      // Add more students here
+    };
 
-      // Fetch student data from Google Apps Script using the entered name
-      const response = await fetch(script.google.com/macros/s/AKfycbyWtqoAvQ7o8_0Zpqa-S1XgP6LHtnX033jn7FIAHmMkk3horDGgO5yJaYp-ouJhI9tf7A/exec);
+    // Function to handle login
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const loginMessage = document.getElementById("login-message");
+
+      // Check if username exists and password is correct
+      if (studentCredentials[username] && studentCredentials[username] === password) {
+        // Successful login, fetch student data
+        loginMessage.innerHTML = "Login successful!";
+        loginMessage.style.color = "green";
+
+        // Hide login form and show student info
+        document.getElementById("login-form").style.display = "none";
+        document.getElementById("student-info").style.display = "block";
+
+        // Display student name
+        document.getElementById("student-name").innerText = username;
+
+        // Fetch the student's data from Google Sheets
+        getStudentData(username);
+      } else {
+        // Invalid credentials
+        loginMessage.innerHTML = "Invalid username or password.";
+        loginMessage.style.color = "red";
+      }
+    }
+
+    // Function to fetch student data from Google Apps Script
+    async function getStudentData(username) {
+      const response = await fetch(script.google.com/macros/s/AKfycbxsWXpZWrjKeocyWo8gFUE9YYJMOy-lAZ1TMJhA35-1SdSazzbQAW14m6nvASAuIuwh/exec?name=${username});
       const data = await response.json();
       
-      // Display the student's name and entry count
       if (data.entries !== undefined) {
-        document.getElementById("student-info").innerHTML = `
-          <p>Name: ${data.name}</p>
+        // Display student entries count
+        document.getElementById("student-entries").innerHTML = `
           <p>Entries: ${data.entries}</p>
         `;
       } else {
-        document.getElementById("student-info").innerHTML = <p>No entries found for ${username}.</p>;
+        document.getElementById("student-entries").innerHTML = <p>No entries found for ${username}.</p>;
       }
     }
   </script>
