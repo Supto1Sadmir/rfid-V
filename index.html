@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFID Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input[type="text"], input[type="password"] {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>RFID System Login</h1>
+  
+  <label for="username">Username:</label>
+  <input type="text" id="username" placeholder="Enter your username">
+  
+  <label for="password">Password:</label>
+  <input type="password" id="password" placeholder="Enter your password">
+  
+  <button onclick="login()">Login</button>
+  
+  <div id="message"></div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const messageDiv = document.getElementById("message");
+
+      // Example credentials (for testing purposes)
+      const studentUsername = "student";
+      const teacherUsername = "teacher";
+      const studentPassword = "student123";
+      const teacherPassword = "teacher123";
+
+      // Check credentials
+      if ((username === studentUsername && password === studentPassword) || 
+          (username === teacherUsername && password === teacherPassword)) {
+        messageDiv.innerHTML = "Login successful!";
+        // Here, you would redirect or load the appropriate view
+        if (username === studentUsername) {
+          window.location.href = "student.html"; // Redirect to student page
+        } else if (username === teacherUsername) {
+          window.location.href = "teacher.html"; // Redirect to teacher page
+        }
+      } else {
+        messageDiv.innerHTML = "Invalid credentials, please try again.";
+      }
+    }
+  </script>
+</body>
+</html>
