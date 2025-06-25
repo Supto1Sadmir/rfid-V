@@ -55,13 +55,17 @@
 
     // Function to handle login
     function login() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
+      const username = document.getElementById("username").value.trim();  // Get username from input
+      const password = document.getElementById("password").value.trim();  // Get password from input
       const loginMessage = document.getElementById("login-message");
+
+      // Log the username and password to check if the function is triggered correctly
+      console.log("Login function triggered.");
+      console.log("Username: ", username);
+      console.log("Password: ", password);
 
       // Check if username exists and password is correct
       if (studentCredentials[username] && studentCredentials[username] === password) {
-        // Successful login, fetch student data
         loginMessage.innerHTML = "Login successful!";
         loginMessage.style.color = "green";
 
@@ -75,7 +79,6 @@
         // Fetch the student's data from Google Sheets
         getStudentData(username);
       } else {
-        // Invalid credentials
         loginMessage.innerHTML = "Invalid username or password.";
         loginMessage.style.color = "red";
       }
@@ -83,8 +86,11 @@
 
     // Function to fetch student data from Google Apps Script
     async function getStudentData(username) {
-      const response = await fetch(https://script.google.com/macros/s/AKfycbxsWXpZWrjKeocyWo8gFUE9YYJMOy-lAZ1TMJhA35-1SdSazzbQAW14m6nvASAuIuwh/exec?name=${username});
+      const response = await fetch('https://script.google.com/macros/s/AKfycbxsWXpZWrjKeocyWo8gFUE9YYJMOy-lAZ1TMJhA35-1SdSazzbQAW14m6nvASAuIuwh/exec?name=${username}');
+      
+      // Log the raw response data
       const data = await response.json();
+      console.log("Data fetched from Google Apps Script:", data);
       
       if (data.entries !== undefined) {
         // Display student entries count
