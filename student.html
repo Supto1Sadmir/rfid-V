@@ -83,7 +83,7 @@
 
     // Function to fetch student data from Google Apps Script
     async function getStudentData(username) {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbxsWXpZWrjKeocyWo8gFUE9YYJMOy-lAZ1TMJhA35-1SdSazzbQAW14m6nvASAuIuwh/exec?name=${username}');
+      const response = await fetch(https://script.google.com/macros/s/AKfycbxsWXpZWrjKeocyWo8gFUE9YYJMOy-lAZ1TMJhA35-1SdSazzbQAW14m6nvASAuIuwh/exec?name=${username});
       const data = await response.json();
       
       if (data.entries !== undefined) {
